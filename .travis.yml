@@ -3,15 +3,16 @@ jdk: oraclejdk8
 before_install:
   - chmod +x mvnw
 sudo: required
+
 services:
   - docker
-travis encrypt DOCKER_USER=”bassey3”
-travis encrypt DOCKER_PASS=”calabar1”
+
 env:
  global:
  - secure: "encrypted-dockerhub-username"
  - secure: "encrypted-dockerhub-password"
  - COMMIT=${TRAVIS_COMMIT::7}
+
 after_success:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
@@ -19,4 +20,3 @@ after_success:
 - docker build -t $IMAGE_NAME:$COMMIT .
 - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME
-Chasis-0.0.1-SNAPSHOT.jar

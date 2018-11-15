@@ -6,15 +6,8 @@ sudo: required
 
 services:
   - docker
-
-env:
- global:
- - secure: "encrypted-dockerhub-username"
- - secure: "encrypted-dockerhub-password"
- - COMMIT=${TRAVIS_COMMIT::7}
-
 after_success:
-- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- docker login -u bassey3 -p Calabar1
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - export IMAGE_NAME=bassey3/chasis
 - docker build -t $IMAGE_NAME:$COMMIT .
